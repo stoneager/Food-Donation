@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receiver Home Page</title><!-- Link to your CSS file -->
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-size: cover;
+        background-position: center;
+        overflow-x: hidden;
+    }
+
+    .taskbar {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .taskbar a {
+        color: #fff;
+        text-decoration: none;
+        margin-right: 20px;
+    }
+
+    .profile-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #fff;
+        text-align: center;
+        line-height: 40px;
+        cursor: pointer;
+    }
+
+    .profile-icon:hover {
+        background-color: #ccc;
+    }
+
+    .container {
+        padding: 20px;
+        position: relative;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        background-image: url('static/3.jpg');
+        background-size:cover;
+        background-position: center;
+        padding-top: 60px;
+        background-color: rgba(255, 255, 255, 0.5); /* Set background color with transparency */
+    }
+
+    .search-form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .search-form input[type="text"] {
+        padding: 10px;
+        margin: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        max-width: 150px;
+    }
+
+    .search-form button {
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    /* Style for donor boxes */
+    .donor {
+        background-color: rgba(240, 240, 240, 0.7); /* Set background color with transparency */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    /* Different background colors for alternate donor boxes */
+    .donor:nth-child(even) {
+        background-color: rgba(211, 211, 211, 0.7); /* Set background color with transparency */
+    }
+
+    /* Style for donor details */
+    .donor-details {
+        display: none;
+        padding-top: 10px;
+    }
+
+    .donor-details p {
+        margin: 5px 0;
+    }
+
+    /* View button style */
+    .view-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+    .view-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+<body>
+    <div class="taskbar">
+        <div>
+            <a href="/rec_home">Home</a>
+            <a href="#">About Us</a>
+            <a href="/chatHome">Chat app</a>
+            <a href="/rec_food">Food</a> 
+        </div>
+        <div class="profile-icon" onclick="goToProfilePage()"></div>
+    </div>
+    <div class="container">\
+    <form style="text-align: center;" method = "post" action = "/search_food">
+        <div class="search-form">
+            <input type="text" id="shopName" placeholder="Shop Name" name = "shopName">
+            <input type="text" id="area" placeholder="Area" name = "area">
+        </div>
+        <div class="search-form">
+            <input type="text" id="district" placeholder="District" name = "district">
+            <input type="text" id="state" placeholder="State" name ="state" >
+            <button class = "btn2" type = "submit" name = "button_clicked" value = "btn2">Search</button>
+        </div>
+    </form>
+        <h3>Donors in Your District:</h3>
+        {% for donor in donors %}
+            <div class="donor">
+                <h3>      Hotel {{ donor[0] }}</h3>
+                <p>Phone: {{ donor[1] }}</p>
+                <p>Address: {{ donor[2] }}</p>
+                <button class="view-button" onclick="toggleDetails(this)">View</button>
+                <div class="donor-details">
+                    {% for i in food %}
+                        {% for j in i %}
+                        {% if j[0] == donor[3] %}
+                        <p>Food Name: {{ j[1] }}</p>
+                        <p>Quantity: {{ j[2] }}</p>
+                        {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+<script>
+     function toggleDetails(button) {
+    var details = button.parentElement.querySelector('.donor-details');
+    details.style.display = details.style.display === 'block' ? 'none' : 'block';
+}
+
+
+    function goToProfilePage() {
+        // Replace 'profile.html' with the actual URL of your profile page
+        window.location.href = 'profile.html';
+    }
+</script>
+</html>
+

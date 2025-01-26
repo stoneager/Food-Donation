@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Food Form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url('static/3.jpg'); /* Add your background image URL here */
+        background-size: cover;
+        background-position: center;
+        overflow-x: hidden; /* Hide horizontal overflow */
+    }
+
+    .taskbar {
+        background-color: #333;
+        color: #fff;
+        padding: 20px; /* Increase the padding for a larger taskbar */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed; /* Fix the taskbar position */
+        width: 100%; /* Make it span the entire width */
+        top: 0; /* Position it at the top */
+        z-index: 999; /* Ensure it's above other elements */
+    }
+
+    .taskbar a {
+        color: #fff;
+        text-decoration: none;
+        margin-right: 20px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 180px auto 20px; /* Adjust the top margin to leave more space for the taskbar */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.7); /* Add background color with opacity */
+        overflow-y: auto; 
+        /* Enable vertical scrolling */
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .form-group input[type="file"] {
+        margin-top: 5px;
+    }
+
+    .add-food-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .add-food-button:hover {
+        background-color: #45a049;
+    }
+
+    .submit-button {
+        background-color: #008CBA;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .submit-button:hover {
+        background-color: #0073ba;
+    }
+
+    h2 {
+        text-align: center; /* Center align the title */
+    }
+
+    .profile-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        margin: 40px auto; /* Center the image horizontally */
+        display: block; /* Ensure it's displayed as a block element */
+    }
+    p{
+        text-align: center;
+    }
+</style>
+
+</head>
+<body>
+<div class="taskbar">
+   <div>
+        <a href="/hotel_home_page">Home</a> <!-- Update this line -->
+        <a href="#">About Us</a>
+        <a href="/chatHome">chat</a>
+        <a href="/view_food">View Orders</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Add Food</h2>
+    <form id="food-form" method="POST" action="/submit_form" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="food-name">Food Name:</label>
+            <input type="text" id="food-name" name="food-name">
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity">
+        </div>
+        <!-- Remove the image preview section -->
+        <div id="additional-fields"></div>
+        <button type="button" class="add-food-button" onclick="addMoreFields()">Add More</button>
+        <button type="submit" class="submit-button" name="button_clicked" value="btn1">Submit</button>
+        <p>{{ans}}</p>
+    </form>
+</div>
+
+<script>
+function addMoreFields() {
+    var additionalFieldsDiv = document.getElementById('additional-fields');
+    var html = '<div class="form-group">' +
+               '<label for="food-name">Food Name:</label>' +
+               '<input type="text" name="food-name">' +
+               '</div>' +
+               '<div class="form-group">' +
+               '<label for="quantity">Quantity:</label>' +
+               '<input type="number" name="quantity">' +
+               '</div>' +
+               '<div class="form-group">' +
+               '</div>';
+    additionalFieldsDiv.innerHTML += html;
+}
+</script>
+</body>
+</html>

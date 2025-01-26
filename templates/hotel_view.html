@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Items</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('static/home.png'); /* Add your background image URL here */
+            background-size: cover;
+            background-position: center;
+            overflow-x: hidden; /* Hide horizontal overflow */
+        }
+
+        .taskbar {
+            background-color: #333;
+        color: #fff;
+        padding: 20px; /* Increase the padding for a larger taskbar */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed; /* Fix the taskbar position */
+        width: 100%; /* Make it span the entire width */
+        top: 0; /* Position it at the top */
+        z-index: 999;
+        }
+
+        .taskbar a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+
+        .container {
+            padding: 20px;
+            position: relative; /* Set position relative for absolute positioning */
+            max-height: calc(100vh - 80px); /* Adjust based on taskbar height */
+            overflow-y: auto;
+            padding: 20px;
+        background-image: url('static/3.jpg'); /* Add your background image URL here */
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+        top: 60px; /* Height of the taskbar */
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .content {
+            background-color: rgba(255, 255, 255, 0.5); /* Add background color with opacity */
+            padding: 20px;
+        }
+
+        /* Style for food item boxes */
+        .food-item {
+            background-color: transparent; /* Make the box transparent */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            position: relative; /* Add position relative for absolute positioning */
+        }
+
+        /* Define different background colors for alternate food items */
+        .food-item:nth-child(even) {
+            background-color: rgba(240, 240, 240, 0.5); /* Light gray with opacity */
+        }
+
+        .food-item:nth-child(odd) {
+            background-color: rgba(211, 211, 211, 0.5); /* Dark gray with opacity */
+        }
+
+        /* Style for food name and quantity */
+        .food-name,
+        .food-quantity {
+            font-weight: bold;
+            margin-bottom: 5px; /* Add margin bottom for spacing */
+        }
+
+        /* Style for edit button */
+        .edit-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Style for remove button */
+        .remove-button {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .remove-button:hover {
+            background-color: #f44336;
+        }
+
+        /* Style for input fields */
+        .edit-input {
+            display: none; /* Initially hide input fields */
+            width: calc(100% - 20px); /* Adjust width to fit inside the box */
+            padding: 5px;
+            margin-bottom: 5px; /* Add margin bottom for spacing */
+        }
+    </style>
+</head>
+<body>
+    <div class="taskbar">
+        <div>
+            <a href="/hotel_home_page">Home</a>
+            <a href="#">About Us</a>
+            <a href="/chatHome">Chat</a>
+            <a href="/add_food">Add Orders</a>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <h1>Food Items</h1>
+        {% for food_item in food_items %}
+        <div class="food-item">
+            <p class="food-name">Food Name: <span class="food-name-text">{{ food_item[0] }}</span></p>
+            <input type="text" class="edit-input" value="{{ food_item[0] }}">
+            <p class="food-quantity">Quantity: <span class="food-quantity-text">{{ food_item[1] }}</span></p>
+            <input type="number" class="edit-input" value="{{ food_item[1] }}">
+            <button class="edit-button" onclick="toggleEditFields(this)">Edit</button>
+            <button class="remove-button" data-food-name="{{ food_item[0] }}" onclick="removeFoodItem(this)">Remove</button>
+            <button class="edit-button" style="display: none;" data-food-name="{{ food_item[0] }}" onclick="saveFoodItem(this)">Save</button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function toggleEditFields(button) {
+            var foodNameText = button.parentElement.querySelector('.food-name-text');
+            var foodNameInput = button.parentElement.querySelector('input[type="text"]');
+            var quantityText = button.parentElement.querySelector('.food-quantity-text');
+            var quantityInput = button.parentElement.querySelector('input[type="number"]');
+            var saveButton = button.parentElement.querySelector('.edit-button[data-food-name]');
+            
+            if (foodNameText.style.display === 'none') {
+                // Switch to text display
+                foodNameText.style.display = 'inline';
+                foodNameInput.style.display = 'none';
+                quantityText.style.display = 'inline';
+                quantityInput.style.display = 'none';
+                button.textContent = 'Edit';
+                saveButton.style.display = 'none';
+            } else {
+                // Switch to input field display
+                foodNameText.style.display = 'none';
+                foodNameInput.style.display = 'inline';
+                quantityText.style.display = 'none';
+                quantityInput.style.display = 'inline';
+                button.textContent = 'Cancel';
+                saveButton.style.display = 'inline';
+            }
+        }
+
+        function saveFoodItem(button) {
+            var foodNameInput = button.parentElement.querySelector('input[type="text"]');
+            var quantityInput = button.parentElement.querySelector('input[type="number"]');
+            var foodName = button.getAttribute('data-food-name');
+            
+            var formData = new FormData();
+            formData.append('food_name', foodName);
+            formData.append('new_food_name', foodNameInput.value);
+            formData.append('quantity', quantityInput.value);
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/update_food');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Update successful
+                    alert('Food item updated successfully');
+                    // Reload the page to reflect the changes
+                    location.reload();
+                } else {
+                    // Update failed
+                    alert('Failed to update food item');
+                }
+            };
+            xhr.send(formData);
+        }
+
+        function removeFoodItem(button) {
+            var foodName = button.getAttribute('data-food-name');
+            
+            var confirmation = confirm('Are you sure you want to remove this item?');
+            if (confirmation) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/remove_food');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // Removal successful
+                        alert('Food item removed successfully');
+                        // Reload the page to reflect the changes
+                        location.reload();
+                    } else {
+                        // Removal failed
+                        alert('Failed to remove food item');
+                    }
+                };
+                xhr.send(JSON.stringify({ food_name: foodName }));
+            }
+        }
+
+        function goToProfilePage() {
+            // Replace 'profile.html' with the actual URL of your profile page
+            window.location.href = 'profile.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat Home</title>
+<style>
+  body{
+    background-image: url("static/1.jpg");
+  }
+  h1{
+    text-align: center;
+    color:white;
+    text-size-adjust:bold;
+  }
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .box {
+    width: calc(33.33% - 20px);
+    margin: 10px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: centre;
+  }
+
+  .box img {
+    width: 100%;
+    height: auto;
+  }
+
+  .box h3 {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+
+  .box p {
+    font-size: 14px;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+  <h1>Chatting Group</h1>
+<div class="container">
+    {% for group in groups %}
+    <div class="box" onclick="openGroup('{{ group.id }}')">
+      <h3>{{ group.title }}</h3>
+      <p>{{ group.description }}</p>
+    </div>
+    {% endfor %}
+</div>
+<script>
+  function openGroup(groupId) {
+    console.log("Opening Group with ID:", groupId);
+    fetch('/group_data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ group_id: groupId }),
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error('Network response was not ok.');
+    })
+    .then(data => {
+        console.log('Group data:', data);
+        const messages = data.messages;
+        const groupName = data.g_name;
+        var user = {{ user | tojson }};
+        window.location.href = '/group_chat?messages=' + encodeURIComponent(JSON.stringify(messages)) +"&group_name=" + encodeURIComponent(groupName) +"&user=" + encodeURIComponent(user);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Webpage</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #000; /* Set background color to black */
+        color: #fff; /* Set default text color to white */
+    }
+
+    .taskbar {
+        /* Remove background color */
+        color: #fff; /* Set text color to white */
+        padding: 10px;
+        display: flex;
+        justify-content: flex-end; /* Align items to the top right */
+        align-items: center;
+        margin-top:20px;
+        margin-right:10px;
+    }
+
+    .taskbar a {
+        color: #fff; /* Set text color to white */
+        text-decoration: none;
+        margin-left: 20px;
+         /* Adjust spacing */
+    }
+
+    .profile-icon {
+        width: 80px;
+        height: 80px;
+        background-color: #ccc;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40px;
+        margin-left:10px ;
+        cursor: pointer;
+    }
+
+    .profile-icon:hover {
+        background-color: #ccc;
+    }
+
+    .container {
+        padding: 20px;
+        position: absolute;
+        top: 60px; /* Height of the taskbar */
+        right: 20px; /* Adjust position to the right */
+        max-width: calc(100% - 40px); /* Adjust as needed */
+        display: flex; /* Set container as flex container */
+        justify-content: space-between; /* Space content and image */
+        align-items: center; /* Center items vertically */
+    }
+
+    .content {
+        padding: 20px;
+        margin-bottom: 100px; /* Adjust margin-top for content */
+        max-width: 60%; /* Adjust as needed */
+    }
+
+    .profile-image {
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+    }
+    .logo{
+        width: 125px;
+        height: 125px;
+        border-radius: 50%;
+        margin-top:0;
+        margin-left:50px;
+    }
+</style>
+</head>
+<body>
+<div class="taskbar">
+    <div>
+        <a href="/rec_home">Home</a>
+        <a href="#">About Us</a>
+        <a href="/chatHome">Chat</a>
+        <a href="/rec_food">View Orders</a>
+    </div>
+    
+</div>
+
+<div class="container">
+    <div class="content">
+        <!-- Your webpage content goes here -->
+        <h1>Say No to Hunger</h1>
+        <p>At our organization, we're committed to ending hunger. We believe everyone deserves access to nutritious food. Through partnerships with local organizations, we provide meals to those in need. Our goal is to ensure no one goes to bed hungry. We support food banks and shelters in our community. Education is key in our fight against hunger. We raise awareness about food insecurity through workshops and campaigns. Join us in saying no to hunger and building a hunger-free world. Together, we can make a difference. Let's stand united against hunger!</p>
+    </div>
+    <img src="static/home.jpg" alt="Profile Image" class="profile-image">
+</div>
+<img src="static/logo.jpg" alt = "logo-Image" class = "logo">
+<script>
+function goToProfilePage() {
+    // Replace 'profile.html' with the actual URL of your profile page
+    window.location.href = 'profile.html';
+}
+</script>
+</body>
+</html>

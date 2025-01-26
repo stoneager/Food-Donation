@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ g_name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image:url("static/whatsapp.jpg");
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color:white;
+        }
+        h2{
+            text-align: center;
+            margin-bottom: 20px;
+            color:white;
+        }
+        #messages {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .message {
+            background-color: #f2f2f2;
+            border-radius: 10px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+        }
+
+        .message p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .sender {
+            font-weight: bold;
+        }
+
+        .timestamp {
+            font-size: 12px;
+            color: #666;
+        }
+
+        #message-form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #message-input {
+            width: 35%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        #send-button {
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #send-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ g_name }}</h1>
+    <center>
+        <h2>Welcome {{ user }}!</h2>
+    </center>
+    <div id="messages">
+        {% for message in messages %}
+            <div class="message">
+                <p class="sender">{{ message.sender }}</p>
+                <p>{{ message.content }}</p>
+                <p class="timestamp">{{ message.timestamp }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <center>
+        <form id="message-form" action="/sendMessage" method="post">
+            <input type="hidden" id="userID" name="userName" value="{{ user }}">
+            <input type="hidden" id="gID" name="groupName" value="{{ g_name }}">
+            <input type="text" id="message-input" name="message" placeholder="Type your message...">
+            <button type="submit" id="send-button">Send</button>
+        </form>
+    </center>
+    
+</body>
+</html>

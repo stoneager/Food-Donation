@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Food Donation App - Sign Up</title>
+    <link rel="stylesheet" href="static/signup.css">
+</head>
+<body>
+    <div class="signup-container">
+        <form id="signup-form" action="/signup" method="post">
+            <h1>Welcome to Food Donation App</h1>
+        <h2>Sign Up</h2>
+        <form id="signup-form" action="/signup" method="post">
+            <div class="form-group">
+                <label for="name">Hotel Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="role">I am a:</label>
+                <select id="role" name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="donor">Donor</option>
+                    <option value="receiver">Receiver</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+            </div>
+            <div class="form-group">
+                <label for="Shop_no">Shop No:</label>
+                <input type="shop_no" id="shop" name="shop" required>
+                <div class="form-group">
+                    <label for="Area">Area:</label>
+                    <input type="Area" id="Area" name="Area" required>
+            <div class="form-group">
+                <label for="state">State:</label>
+                <select id="state" name="state" onchange="updateDistricts()" required>
+                    <option value="">Select State</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Assam">Assam</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Chhattisgarh">Chhattisgarh</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                    <option value="Jharkhand">Jharkhand</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Manipur">Manipur</option>
+                    <option value="Meghalaya">Meghalaya</option>
+                    <option value="Mizoram">Mizoram</option>
+                    <option value="Nagaland">Nagaland</option>
+                    <option value="Odisha">Odisha</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Rajasthan">Rajasthan</option>
+                    <option value="Sikkim">Sikkim</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Tripura">Tripura</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Uttarakhand">Uttarakhand</option>
+                    <option value="West Bengal">West Bengal</option>
+                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                    <option value="Lakshadweep">Lakshadweep</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Puducherry">Puducherry</option>
+                    <option value="Ladakh">Ladakh</option>
+                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="district">District:</label>
+                <select id="district" name="district" required>
+                    <option value="">Select District</option>
+                    <!-- District options will be populated dynamically based on the selected state -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="pincode">PIN Code:</label>
+                <input type="text" id="pincode" name="pincode" pattern="[0-9]{6}" required>
+            </div>
+            <button type="submit" name="button_clicked" value="btn1">Sign Up</button>
+        </form>
+        <p id="error-message" class="error-message"></p>
+        <p>Already have an account? <a href="/login_page">Login</a></p>
+    </div>
+    <script src="static/script.js"></script>
+    <script>
+        function updateDistricts() {
+            var state = document.getElementById("state").value;
+            var districtDropdown = document.getElementById("district");
+            districtDropdown.innerHTML = ""; // Clear existing options
+
+            // Define the list of districts for each state
+            var districts = {
+                "Andhra Pradesh": ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool"],
+                "Arunachal Pradesh": ["Anjaw", "Changlang", "Dibang Valley", "East Kameng", "East Siang", "Kurung Kumey"],
+                "Assam": ["Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo"],
+                "Bihar": ["Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur"],
+                "Chhattisgarh": ["Balod", "Baloda Bazar", "Balrampur", "Bastar", "Bemetara", "Bijapur"],
+                "Goa": ["North Goa", "South Goa"],
+                "Gujarat": ["Ahmedabad", "Amreli", "Anand", "Aravalli", "Banaskantha", "Bharuch"],
+                "Haryana": ["Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Gurugram"],
+                "Himachal Pradesh": ["Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu"],
+                "Jharkhand": ["Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum"],
+                "Karnataka": ["Bagalkot", "Ballari", "Belagavi", "Bengaluru Rural", "Bengaluru Urban", "Bidar"],
+                "Kerala": ["Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam"],
+                "Madhya Pradesh": ["Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani"],
+                "Maharashtra": ["Ahmednagar", "Akola", "Amravati", "Aurangabad", "Beed", "Bhandara"],
+                "Manipur": ["Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Jiribam"],
+                "Meghalaya": ["East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "North Garo Hills", "Ri Bhoi", "South Garo Hills"],
+                "Mizoram": ["Aizawl", "Champhai", "Hnahthial", "Khawzawl", "Kolasib", "Lawngtlai"],
+                "Nagaland": ["Dimapur", "Kiphire", "Kohima", "Longleng", "Mokokchung", "Mon"],
+                "Odisha": ["Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh"],
+                "Punjab": ["Amritsar", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka"],
+                "Rajasthan": ["Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur"],
+                "Sikkim": ["East Sikkim", "North Sikkim", "South Sikkim", "West Sikkim"],
+                "Tamil Nadu": ["Ariyalur", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kanchipuram", "Kanyakumari", "Karur", "Krishnagiri", "Madurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Salem", "Sivaganga", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"],
+                "Telangana": ["Adilabad", "Bhadradri Kothagudem", "Hyderabad", "Jagtial", "Jangaon", "Jayashankar Bhupalapally"],
+                "Tripura": ["Dhalai", "Gomati", "Khowai", "North Tripura", "Sipahijala", "South Tripura"],
+                "Uttar Pradesh": ["Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya"],
+                "Uttarakhand": ["Almora", "Bageshwar", "Chamoli", "Champawat", "Dehradun", "Haridwar"],
+                "West Bengal": ["Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Darjeeling"],
+                "Andaman and Nicobar Islands": ["Nicobar", "North and Middle Andaman", "South Andaman"],
+                "Chandigarh": ["Chandigarh"],
+                "Dadra and Nagar Haveli and Daman and Diu": ["Dadra and Nagar Haveli", "Daman", "Diu"],
+                "Lakshadweep": ["Agatti", "Amini", "Andrott", "Kadmat", "Kalpeni", "Kavaratti"],
+                "Delhi": ["Central Delhi", "East Delhi", "New Delhi", "North Delhi", "North East Delhi", "North West Delhi"],
+                "Puducherry": ["Karaikal", "Mahe", "Puducherry", "Yanam"],
+                "Ladakh": ["Kargil", "Leh"],
+                "Jammu and Kashmir": ["Anantnag", "Bandipora", "Baramulla", "Budgam", "Doda", "Ganderbal"]
+            };
+
+            // Populate options based on the selected state
+            if (state in districts) {
+                var districtList = districts[state];
+                for (var i = 0; i < districtList.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = districtList[i];
+                    option.value = districtList[i];
+                    districtDropdown.add(option);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
