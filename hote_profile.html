@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .profile-details {
+            padding: 20px;
+            text-align: left;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 400px;
+            width: 100%;
+        }
+        .profile-details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .profile-details li {
+            margin-bottom: 10px;
+        }
+        .edit-button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .edit-mode input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-details" id="profileDetails">
+    <h2>User Profile</h2>
+    <ul>
+        <li><span id="name">Name:</span> John Doe</li>
+        <li><span id="email">Email:</span> john@example.com</li>
+        <li><span id="mobile">Mobile:</span> 123-456-7890</li>
+        <li><span id="address">Address:</span> 123 Main St, City</li>
+        <li><span id="about">About:</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+        <li><span id="manager">Manager Name:</span> Jane Smith</li>
+    </ul>
+    <button class="edit-button" onclick="editProfile()">Edit</button>
+</div>
+
+<script>
+    function editProfile() {
+        var profileDetails = document.getElementById('profileDetails');
+        var listItems = profileDetails.getElementsByTagName('li');
+        var editButton = profileDetails.querySelector('.edit-button');
+        
+        if (editButton.textContent === 'Edit') {
+            editButton.textContent = 'Save';
+            for (var i = 0; i < listItems.length; i++) {
+                var spanId = listItems[i].querySelector('span').id;
+                var text = listItems[i].textContent.trim().split(':')[1].trim();
+                listItems[i].innerHTML = <span id="${spanId}">${spanId[0].toUpperCase() + spanId.slice(1)}:</span> <input type="text" value="${text}">;
+            }
+        } 
+        else {
+            editButton.textContent = 'Edit';
+            for (var i = 0; i < listItems.length; i++) {
+                var spanId = listItems[i].querySelector('span').id;
+                var inputValue = listItems[i].querySelector('input').value;
+                listItems[i].innerHTML = <span id="${spanId}">${spanId[0].toUpperCase() + spanId.slice(1)}:</span> ${inputValue};
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
